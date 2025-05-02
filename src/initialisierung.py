@@ -4,6 +4,9 @@ import os
 import pandas as pd
 from PIL import Image, ImageTk
 
+# Poster-Funktionen importieren
+import poster_loader as poster
+
 # Pfade zu den CSV-Dateien im assets/data-Verzeichnis
 CSV_VOCAB = os.path.join("assets", "data", "Vokabeln alle.csv")
 CSV_STATIONS = os.path.join("assets", "data", "Stationenbeschreibung-englisch.csv")
@@ -30,7 +33,6 @@ def init_game_state(app, stations, vocab_levels):
     - app.level, app.questions, app.current_question etc.
     """
     try:
-        # Beispiel: Level starten bei 1, Fragen aus dem vocab_levels
         app.level = 1
         app.questions = vocab_levels.values.tolist()
         app.current_question = 0
@@ -45,6 +47,7 @@ def build_ui(app):
     Erstellt die Haupt-GUI: Canvas, Buttons, Labels etc.
     Verwendet PIL für Bild-Laden falls notwendig.
     """
-    # Beispielhafter Aufbau
     app.root.title("Vokabellernspiel")
-    # ... weitere UI-Elemente hier anlegen ...
+    # Hier folgen weitere UI-Elemente, z.B.:
+    # app.canvas = tk.Canvas(app.root, width=800, height=600)
+    # app.canvas.pack()
