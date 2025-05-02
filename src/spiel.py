@@ -1,10 +1,14 @@
-# spiel.py
+# src/spiel.py
 
 import tkinter as tk
 from tkinter import messagebox
 import initialisierung
 import fragenlogik
 from tts import init_tts
+import pandas as pd
+
+# Direkte Pfadangabe zur Vokabel-CSV in assets/data
+CSV_VOCAB = "assets/data/Vokabeln alle.csv"
 
 class Spiel:
     def __init__(self, root):
@@ -34,9 +38,7 @@ class Spiel:
         Erkennt Sprachen automatisch aus der CSV-Kopfzeile.
         Speichert self.learn_lang und self.native_lang.
         """
-        from config import CSV_VOCAB
-        import pandas as pd
-
+        # CSV_VOCAB wird oben definiert
         df = pd.read_csv(CSV_VOCAB, sep=';', nrows=0, encoding='utf-8-sig')
         languages = list(df.columns)
 
