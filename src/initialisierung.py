@@ -4,17 +4,18 @@ import os
 import pandas as pd
 from PIL import Image, ImageTk
 
-# Wir importieren hier Dein poster_loader-Modul unter dem Namen "poster"
+# Importiere poster_loader und nenne es poster
 import poster_loader as poster
 
-# Pfade zu den CSV-Dateien im assets/data-Verzeichnis
+# Pfade zu den CSV-Dateien
 CSV_VOCAB = os.path.join("assets", "data", "Vokabeln alle.csv")
 CSV_STATIONS = os.path.join("assets", "data", "Stationenbeschreibung-englisch.csv")
 
+
 def load_game_data(learn_lang: str, native_lang: str):
     """
-    Lädt aus der Vokabel- und Stations-CSV die benötigten Daten.
-    Gibt (stations_df, vocab_levels_df) zurück.
+    Lädt Vokabel- und Stationsdaten aus den CSV-Dateien und
+    filtert die Vokabeln nach den gewählten Sprachen.
     """
     df_vocab = pd.read_csv(CSV_VOCAB, sep=';', encoding='utf-8-sig')
     df_st = pd.read_csv(CSV_STATIONS, sep=';', encoding='utf-8-sig')
@@ -24,9 +25,11 @@ def load_game_data(learn_lang: str, native_lang: str):
 
     return stations, vocab_levels
 
+
 def init_game_state(app, stations, vocab_levels):
     """
-    Initialisiert den Spielzustand in der App-Instanz.
+    Initialisiert den Spielzustand in der App-Instanz:
+    level, questions, current_question etc.
     """
     try:
         app.level = 1
@@ -38,15 +41,23 @@ def init_game_state(app, stations, vocab_levels):
         messagebox.showerror("Fehler", f"Spiel konnte nicht initialisiert werden:\n{e}")
         return False
 
+
 def build_ui(app):
     """
-    Erstellt die Haupt-GUI-Elemente.
+    Erstellt die GUI-Grundlage: Fenster-Titel, Canvas, Buttons etc.
     """
     app.root.title("Vokabellernspiel")
-    # (Weitere UI-Elemente…)
+    # Hier kannst Du weitere UI-Elemente anlegen, z.B. Canvas:
+    # app.canvas = tk.Canvas(app.root, width=800, height=600)
+    # app.canvas.pack()
+
 
 def load_poster(app, level):
     """
-    Wrapper, damit main.py initialisierung.load_poster aufruft.
+    Wrapper-Funktion, die das korrekte Poster lädt und anzeigt.
+    Verwendet poster.display_poster aus poster_loader.py.
     """
-    return poster.load_poster(app, level)
+    # Erzeuge den Pfad zur Poster-Datei (falls Du Poster-Dateien nach Level benennst)
+    # Beispiel: poster_datei = f"assets/data/poster_level_{level}.png"
+    # Für jetzt übernimmst Du, was poster_loader selbst erwartet:
+    return poster.display_poster(app, poster.load_poster_image, level)
