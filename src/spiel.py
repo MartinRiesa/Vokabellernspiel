@@ -7,9 +7,6 @@ import fragenlogik
 from tts import init_tts
 import pandas as pd
 
-# Direkte Pfadangabe zur Vokabel-CSV in assets/data
-CSV_VOCAB = "assets/data/Vokabeln alle.csv"
-
 class Spiel:
     def __init__(self, root):
         self.root = root
@@ -29,7 +26,8 @@ class Spiel:
         initialisierung.build_ui(self)
 
         # 5) Erstes Poster laden und erste Frage starten
-        initialisierung.poster.load_poster(self, self.level)
+        # Hier wird jetzt load_poster aus initialisierung.py verwendet
+        initialisierung.load_poster(self, self.level)
         fragenlogik.next_question(self)
 
     def _ask_language(self):
@@ -38,8 +36,7 @@ class Spiel:
         Erkennt Sprachen automatisch aus der CSV-Kopfzeile.
         Speichert self.learn_lang und self.native_lang.
         """
-        # CSV_VOCAB wird oben definiert
-        df = pd.read_csv(CSV_VOCAB, sep=';', nrows=0, encoding='utf-8-sig')
+        df = pd.read_csv(initialisierung.CSV_VOCAB, sep=';', nrows=0, encoding='utf-8-sig')
         languages = list(df.columns)
 
         win = tk.Toplevel(self.root)
@@ -86,5 +83,10 @@ class Spiel:
         initialisierung.build_ui(self)
 
         # Erstes Poster laden und Quiz starten
-        initialisierung.poster.load_poster(self, self.level)
+        initialisierung.load_poster(self, self.level)
         fragenlogik.next_question(self)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = Spiel(root)
+    root.mainloop()
